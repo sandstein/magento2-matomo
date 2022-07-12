@@ -120,7 +120,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getBaseUrl($store = null, $secure = null)
     {
-        return $this->_getBaseUrl($this->getHostname($store), $secure);
+        $hostname = $this->getHostname($store);
+        if (str_contains($hostname, 'https://')) {
+            $secure = true;
+        }
+        return $this->_getBaseUrl($hostname, $secure);
     }
 
     /**
