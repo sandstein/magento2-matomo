@@ -69,11 +69,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getHostname($store = null)
     {
-        return trim($this->scopeConfig->getValue(
+        $hostname = $this->scopeConfig->getValue(
             self::XML_PATH_HOSTNAME,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $store
-        ));
+        );
+        return $hostname ? trim($hostname): null;
     }
 
     /**
@@ -84,11 +85,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getCdnHostname($store = null)
     {
-        return trim($this->scopeConfig->getValue(
+        $cdnHostname = $this->scopeConfig->getValue(
             self::XML_PATH_CDN_HOSTNAME,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $store
-        ));
+        );
+        return $cdnHostname ? trim($cdnHostname) : null;
     }
 
     /**
@@ -131,7 +133,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getCdnBaseUrl($store = null, $secure = null)
     {
         $host = $this->getCdnHostname($store);
-        return ('' !== $host)
+        return ($host !== null)
             ? $this->_getBaseUrl($host, $secure)
             : $this->getBaseUrl($store, $secure);
     }
